@@ -20,6 +20,68 @@
             --text-light: #475569;
         }
 
+        /* Logo Styles */
+        .logo-text {
+            font-family: 'STXingkai', 'FZXingKai-S04S', 'KaiTi', serif;
+            font-size: 32px;
+            font-weight: bold;
+            position: relative;
+            text-decoration: none;
+            padding: 8px 12px;
+            letter-spacing: 4px;
+            background: linear-gradient(120deg, 
+                var(--primary) 0%, 
+                var(--accent) 50%, 
+                var(--primary-dark) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s infinite;
+            text-shadow: 0 0 1px rgba(0,0,0,0.1);
+        }
+
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--primary) 50%, 
+                transparent 100%);
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+            opacity: 0;
+        }
+
+        .logo-text:hover::after {
+            width: 80%;
+            opacity: 1;
+        }
+
+        .logo-text:hover {
+            transform: scale(1.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-position: right center;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 28px;
+                padding: 6px 8px;
+                letter-spacing: 2px;
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -577,69 +639,6 @@
             }
         }
 
-        /* Logo Styles */
-        .logo-text {
-            font-family: 'STXingkai', 'FZXingKai-S04S', 'KaiTi', serif;
-            font-size: 32px;
-            font-weight: bold;
-            position: relative;
-            text-decoration: none;
-            padding: 8px 12px;
-            letter-spacing: 4px;
-            background: linear-gradient(120deg, 
-                var(--primary) 0%, 
-                var(--accent) 50%, 
-                var(--primary-dark) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s infinite;
-            text-shadow: 0 0 1px rgba(0,0,0,0.1);
-        }
-
-        .logo-text::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--primary) 50%, 
-                transparent 100%);
-            transform: translateX(-50%);
-            transition: width 0.3s ease;
-            opacity: 0;
-        }
-
-        .logo-text:hover::after {
-            width: 80%;
-            opacity: 1;
-        }
-
-        .logo-text:hover {
-            transform: scale(1.02);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background-position: right center;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            50% { background-position: 100% center; }
-            100% { background-position: 0% center; }
-        }
-
-        /* 为移动端优化 logo 样式 */
-        @media (max-width: 768px) {
-            .logo-text {
-                font-size: 28px;
-                padding: 6px 8px;
-                letter-spacing: 2px;
-            }
-        }
-
         /* 优化 favicon 样式 */
         .favicon-text {
             font-family: 'STXingkai', 'FZXingKai-S04S', 'KaiTi', serif;
@@ -654,7 +653,22 @@
 <body>
     <header class="header">
         <nav class="nav-container">
-            <a href="#" class="logo-text company-name">青岛广视智能科技有限公司</a>
+            <a href="#" class="logo-text company-name" id="companyLogo">
+                <svg width="200" height="60" id="logoSvg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:var(--primary);stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:var(--accent);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:var(--primary-dark);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" 
+                          fill="url(#logoGradient)" 
+                          style="font-family: 'STXingkai', 'FZXingKai-S04S', 'KaiTi', serif; font-size: 32px; font-weight: bold;">
+                        青岛广视智能科技有限公司
+                    </text>
+                </svg>
+            </a>
             <div class="nav-links">
                 <a href="#about" class="nav-link">关于我们</a>
                 <a href="#process" class="nav-link">服务流程</a>
@@ -970,6 +984,64 @@
 
     <script src="./page1_files/bootstrap.min.js"></script>
     <script>
+        // 预设渐变色组合
+        const gradientPresets = [
+            {
+                primary: '#2563eb',
+                accent: '#3b82f6',
+                primaryDark: '#1e40af'
+            },
+            {
+                primary: '#7c3aed',
+                accent: '#8b5cf6',
+                primaryDark: '#5b21b6'
+            },
+            {
+                primary: '#059669',
+                accent: '#10b981',
+                primaryDark: '#047857'
+            },
+            {
+                primary: '#dc2626',
+                accent: '#ef4444',
+                primaryDark: '#b91c1c'
+            },
+            {
+                primary: '#ea580c',
+                accent: '#f97316',
+                primaryDark: '#c2410c'
+            },
+            {
+                primary: '#0284c7',
+                accent: '#0ea5e9',
+                primaryDark: '#0369a1'
+            }
+        ];
+
+        // 随机选择渐变色组合
+        function getRandomGradient() {
+            return gradientPresets[Math.floor(Math.random() * gradientPresets.length)];
+        }
+
+        // 应用渐变色
+        function applyGradientColors() {
+            const colors = getRandomGradient();
+            const root = document.documentElement;
+            
+            // 更新CSS变量
+            root.style.setProperty('--primary', colors.primary);
+            root.style.setProperty('--accent', colors.accent);
+            root.style.setProperty('--primary-dark', colors.primaryDark);
+
+            // 更新SVG渐变
+            const gradient = document.querySelector('#logoGradient');
+            gradient.innerHTML = `
+                <stop offset="0%" style="stop-color:${colors.primary};stop-opacity:1" />
+                <stop offset="50%" style="stop-color:${colors.accent};stop-opacity:1" />
+                <stop offset="100%" style="stop-color:${colors.primaryDark};stop-opacity:1" />
+            `;
+        }
+
         // 动态生成 favicon
         function generateFavicon() {
             const canvas = document.createElement('canvas');
@@ -978,7 +1050,7 @@
             const ctx = canvas.getContext('2d');
             
             // 获取青岛广视智能科技有限公司
-            const companyName = document.querySelector('.company-name').textContent;
+            const companyName = document.querySelector('#logoSvg text').textContent.trim();
             // 处理青岛广视智能科技有限公司（去除"市"字，取前4个字）
             const processedName = companyName.replace('市', '').substring(0, 4);
             
@@ -1008,8 +1080,41 @@
             document.head.appendChild(link);
         }
 
-        // 页面加载完成后生成favicon
-        window.addEventListener('load', generateFavicon);
+        // 处理青岛广视智能科技有限公司
+        function processCompanyName() {
+            const logoText = document.querySelector('#logoSvg text');
+            const fullName = logoText.textContent.trim();
+            // 去除"市"字并取前4个字（仅用于logo和favicon）
+            const processedName = fullName.replace('市', '').substring(0, 4);
+            
+            // Logo使用处理后的名字
+            logoText.textContent = processedName;
+
+            // hero-title使用完整名字
+            document.querySelector('.hero-title').textContent = fullName;
+            
+            // footer使用完整名字
+            document.querySelector('.footer-info h3').textContent = fullName;
+            document.querySelector('.footer-bottom p').textContent = 
+                `© ${new Date().getFullYear()} ${fullName}. All rights reserved.`;
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('load', () => {
+            applyGradientColors(); // 先应用随机渐变色
+            processCompanyName();
+            generateFavicon();
+        });
+
+        // 添加logo动画效果
+        const logoSvg = document.querySelector('#logoSvg');
+        logoSvg.addEventListener('mouseover', () => {
+            const gradient = document.querySelector('#logoGradient');
+            gradient.innerHTML += `
+                <animate attributeName="x1" values="0%;100%;0%" dur="3s" repeatCount="1"/>
+                <animate attributeName="x2" values="100%;200%;100%" dur="3s" repeatCount="1"/>
+            `;
+        });
     </script>
 </body>
 </html>
